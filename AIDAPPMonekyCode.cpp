@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
 	int monkey;
-	long int health=100, injuries=1;
+	long int health=2000, injuries=1;
 	long int i, N, firstElemQueue, pos=1, count=0, maxCount=0;
 	stack<long int> winningPositions;
 	queue<long int> monkeyQueue;
@@ -19,19 +19,19 @@ int main()
 	{
 		cin>>monkey;
 
-		monkeyQueue.push(monkey);
-		count++;
+		monkeyQueue.push(monkey);								//Queue of monkeys that contain the all the monkeys that can be defeated by us starting from position 'pos'.
+		count++;												// 'count' - number of monkeys in the queue at a time.
 
 		health -= monkey;
 		injuries *= monkey;
 
-		while(health<1 || injuries>MAXINJ)
+		while(health<1 || injuries>MAXINJ)						//In case if the health has gone down below 1 or injuries have exceeded the maximum injuries, we pop the elements until conditions are met again and maintain the max count.
 		{
 			firstElemQueue = monkeyQueue.front();
 			health += firstElemQueue;
 			injuries /= firstElemQueue;
 
-			cout<<"popped : "<<endl;
+			cout<<"Popped : "<<endl;							
 			monkeyQueue.pop();
 			count--;
 			pos++;
@@ -40,13 +40,13 @@ int main()
 		
 		cout<<"C : "<<count<<"  max count : "<<maxCount<<endl;
 		
-		if(count == maxCount)
+		if(count == maxCount)									//Stack that maintains all the winning positions.
 			winningPositions.push(pos);
 		
 		
-		if(count>maxCount)
-		{
-			maxCount = count;
+		if(count>maxCount)										//In case the count has exceeded max count starting from position 'pos', we empty the stack and fill it with the current pos.
+		{		
+			maxCount = count;								
 			while(!winningPositions.empty())
 			{
 				winningPositions.pop();
@@ -57,7 +57,7 @@ int main()
 		
 	}
 	
-	while(!winningPositions.empty())
+	while(!winningPositions.empty())							//All the winning positions.
 	{
 		cout<<"Winning Position : "<<winningPositions.top()<<endl;
 		winningPositions.pop();
@@ -65,3 +65,6 @@ int main()
 	return 0;
 
 }
+
+
+//The time complexity is O(n)
